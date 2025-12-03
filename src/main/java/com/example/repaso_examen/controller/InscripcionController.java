@@ -36,7 +36,7 @@ public class InscripcionController {
     public String paso1(Model model, @ModelAttribute("inscripcion") Inscripcion inscripcion) {
         List<Taller> talleres = service.obtenerTodosTalleres();
 
-        //Guardar los datos
+        // Rellenamos el DTO desde el objeto de sesión
         Paso1DTO paso1DTO = new Paso1DTO();
         paso1DTO.setTallerId(inscripcion.getTallerId());
         paso1DTO.setNumeroAsistentes(inscripcion.getNumeroAsistentes());
@@ -59,6 +59,7 @@ public class InscripcionController {
             model.addAttribute("talleres", talleres);
             return "paso1";
         }
+        // Guardamos en el objeto de sesión
 
         inscripcion.setTallerId(dto.getTallerId());
         inscripcion.setNumeroAsistentes(dto.getNumeroAsistentes());
@@ -72,7 +73,7 @@ public class InscripcionController {
         Taller taller = service.obtenerTallerPorId(inscripcion.getTallerId());
         model.addAttribute("taller", taller);
 
-        //Guardar los datos que esten en la sesion
+        // Rellenamos el DTO desde el objeto de sesión
         Paso2DTO dto = new Paso2DTO();
         dto.setNombreParticipante(inscripcion.getNombreParticipante());
         dto.setEmailParticipante(inscripcion.getEmailParticipante());
@@ -96,6 +97,7 @@ public class InscripcionController {
             return "paso2";
         }
 
+        //Guardamos el objeto de la sesion
         inscripcion.setNombreParticipante(dto.getNombreParticipante());
         inscripcion.setEmailParticipante(dto.getEmailParticipante());
         inscripcion.setPrecioTotal(service.calcularPrecioTotal(taller, inscripcion.getNumeroAsistentes()));
