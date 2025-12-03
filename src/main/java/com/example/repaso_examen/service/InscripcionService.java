@@ -23,6 +23,7 @@ public class InscripcionService {
         this.inscripcionRepo = inscripcionRepo;
     }
 
+    //Talleres
     // Obtener todos los talleres
     public List<Taller> obtenerTodosTalleres() {
         return tallerRepo.findAll();
@@ -33,6 +34,7 @@ public class InscripcionService {
         return tallerRepo.findById(id);
     }
 
+    //Inscripciones
     // Calcular el precio total de la inscripción
     public BigDecimal calcularPrecioTotal(Taller taller, int numeroAsistentes) {
         return taller.getPrecio().multiply(BigDecimal.valueOf(numeroAsistentes));
