@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Inscripciones</title>
+</head>
+<body>
+<h1>Inscripciones Registradas</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Taller</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Número de asistentes</th>
+        <th>Precio total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="inscripcion : ${inscripciones}">
+        <td th:text="${inscripcion.id}"></td>
+        <td th:text="${inscripcion.tallerId}"></td>
+        <td th:text="${inscripcion.nombreParticipante}"></td>
+        <td th:text="${inscripcion.emailParticipante}"></td>
+        <td th:text="${inscripcion.numeroAsistentes}"></td>
+        <td th:text="${inscripcion.precioTotal} + ' €'"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/inscripcion/paso1">Nueva inscripción</a>
+</body>
+</html>

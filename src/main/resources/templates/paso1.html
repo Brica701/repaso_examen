@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Paso 1 - Selección de Taller</title>
+</head>
+<body>
+<h1>Selecciona un Taller</h1>
+
+<form th:action="@{/inscripcion/paso1}" th:object="${paso1DTO}" method="post">
+    <!-- Taller -->
+    <label for="tallerId">Taller:</label>
+    <select th:field="*{tallerId}" id="tallerId" required>
+        <option value="">--Selecciona un taller--</option>
+        <option th:each="taller : ${talleres}"
+                th:value="${taller.id}"
+                th:text="${taller.nombre} + ' (' + ${taller.fecha} + ') - ' + ${taller.precio} + '€'">
+        </option>
+    </select>
+    <div th:if="${#fields.hasErrors('tallerId')}" th:errors="*{tallerId}"></div>
+
+    <br><br>
+
+    <!-- Número de asistentes -->
+    <label for="numeroAsistentes">Número de asistentes:</label>
+    <input type="number" th:field="*{numeroAsistentes}" id="numeroAsistentes" min="1" required>
+    <div th:if="${#fields.hasErrors('numeroAsistentes')}" th:errors="*{numeroAsistentes}"></div>
+
+    <br><br>
+    <button type="submit">Siguiente</button>
+
+</form>
+</body>
+</html>

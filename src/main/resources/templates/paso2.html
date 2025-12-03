@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Paso 2 - Datos del Participante</title>
+</head>
+<body>
+<h1>Introduce tus datos</h1>
+
+<p><strong>Taller seleccionado:</strong> <span th:text="${taller.nombre}"></span></p>
+<p><strong>Fecha:</strong> <span th:text="${taller.fecha}"></span></p>
+<p><strong>Precio por asistente:</strong> <span th:text="${taller.precio}"></span> €</p>
+<p><strong>Número de asistentes:</strong> <span th:text="${inscripcion.numeroAsistentes}"></span></p>
+
+<form th:action="@{/inscripcion/paso2}" th:object="${paso2DTO}" method="post">
+    <!-- Nombre -->
+    <label for="nombreParticipante">Nombre:</label>
+    <input type="text" th:field="*{nombreParticipante}" id="nombreParticipante" required>
+    <div th:if="${#fields.hasErrors('nombreParticipante')}" th:errors="*{nombreParticipante}"></div>
+
+    <br><br>
+
+    <!-- Email -->
+    <label for="emailParticipante">Email:</label>
+    <input type="email" th:field="*{emailParticipante}" id="emailParticipante" required>
+    <div th:if="${#fields.hasErrors('emailParticipante')}" th:errors="*{emailParticipante}"></div>
+
+    <br><br>
+    <button type="submit">Confirmar inscripción</button>
+    <a th:href="@{/inscripcion/paso1}">Volver</a>
+
+</form>
+</body>
+</html>
