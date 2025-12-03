@@ -1,6 +1,7 @@
 package com.example.repaso_examen.repository;
 
 import com.example.repaso_examen.model.Inscripcion;
+import com.example.repaso_examen.model.Taller;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -48,4 +49,41 @@ public class InscripcionRepository {
             }
         });
     }
+
+    //Admin
+
+    // Obtener inscripción por id
+    public Inscripcion findById(int id) {
+        String sql = "SELECT * FROM inscripcion WHERE id = ?";
+        return jdbc.queryForObject(sql, new Object[]{id}, (rs, rowNum) ->
+                Inscripcion.builder()
+                        .id(rs.getInt("id"))
+                        .tallerId(rs.getInt("taller_id"))
+                        .nombreParticipante(rs.getString("nombre_participante"))
+                        .emailParticipante(rs.getString("email_participante"))
+                        .numeroAsistentes(rs.getInt("numero_asistentes"))
+                        .precioTotal(rs.getBigDecimal("precio_total"))
+                        .build()
+        );
+    }
+    // Actualizar inscripción existente
+    public void update(Inscripcion inscripcion) {
+        String sql = "UPDATE inscripcion SET taller_id = ?, nombre_participante = ?, email_participante = ?, numero_asistentes = ?, precio_total = ? " +
+                "WHERE id = ?";
+        jdbc.update(sql,
+                inscripcion.getTallerId(),
+                inscripcion.getNombreParticipante(),
+                inscripcion.getEmailParticipante(),
+                inscripcion.getNumeroAsistentes(),
+                inscripcion.getPrecioTotal(),
+                inscripcion.getId()
+        );
+    }
+    // Borrar inscripción por id
+    public void deleteById(int id) {
+        String sql = "DELETE FROM inscripcion WHERE id = ?";
+        jdbc.update(sql, id);
+    }
+
+
 }

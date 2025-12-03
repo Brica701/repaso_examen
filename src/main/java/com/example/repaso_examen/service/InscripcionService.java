@@ -4,11 +4,13 @@ import com.example.repaso_examen.model.Inscripcion;
 import com.example.repaso_examen.model.Taller;
 import com.example.repaso_examen.repository.InscripcionRepository;
 import com.example.repaso_examen.repository.TallerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Slf4j
 @Service
 public class InscripcionService {
 
@@ -45,4 +47,21 @@ public class InscripcionService {
     public List<Inscripcion> listarInscripciones() {
         return inscripcionRepo.findAll();
     }
+
+    //Admin
+    public Inscripcion obtenerInscripcionPorId(int id) {
+        return inscripcionRepo.findById(id);
+    }
+
+    public void actualizarInscripcion(int id, Inscripcion nuevaInscripcion) {
+        nuevaInscripcion.setId(id);
+        Taller taller = obtenerTallerPorId(nuevaInscripcion.getTallerId());
+        nuevaInscripcion.setPrecioTotal(calcularPrecioTotal(taller, nuevaInscripcion.getNumeroAsistentes()));
+        inscripcionRepo.update(nuevaInscripcion);
+    }
+
+    public void eliminarInscripcion(int id) {
+        inscripcionRepo.deleteById(id);
+    }
+
 }
